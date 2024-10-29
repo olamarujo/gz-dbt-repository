@@ -2,12 +2,60 @@ version: 2
 
 sources:
   - name: raw
+    description: raw data from GreenWeez
     schema: gz_raw_data
     tables:
 
       - name: products
-        identifier: raw_gz_product
+        description: raw data for all products sold
+        identifier: raw_gz_products
+        columns:
+          - name: products_id
+            description: the identification number for a given product
+            tests:
+              - unique
+              - not_null
+          - name: purchSE_PRICE
+            description: the price of a given product
+          
       - name: sales
+        description: raw data for all sales
         identifier: raw_gz_sales
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness: 
+          warn_after:
+            count: 90
+            period: day
+        columns:
+          - name: "(orders_id || '_' || pdt_id)"
+            tests:
+              - unique
+              - not_null
+          - name: date_date
+            description: the day and time of a given order and product
+          - name: orders_id
+            description: the identification number of the order
+          - name: pdt_id
+            description: the i
+          - name: revenue
+            description: the amount of revenue for a given order and product
+          - name: quantity
+            description: the amount of products in a given order
+
       - name: ship
+        description: raw data for shipping
         identifier: raw_gz_ship
+        columns:
+          - name: orders_id
+            description: the identification number of the order
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee
+            description: the amount of fee in a given order
+          - name: shipping_fee_1 
+            description: the amount of fee in a given order
+          - name: logcost
+            description: the cost of the logging for a given order
+          - name: ship_cost
+            description: the amount of cost for shipping a given order
