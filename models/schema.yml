@@ -8,7 +8,7 @@ sources:
 
       - name: products
         description: raw data for all products sold
-        identifier: raw_gz_product
+        identifier: raw_gz_products
         columns:
           - name: products_id
             tests:
