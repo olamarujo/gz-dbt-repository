@@ -2,12 +2,54 @@ version: 2
 
 sources:
   - name: raw
+    description: raw data from GreenWeez
     schema: gz_raw_data
     tables:
 
       - name: products
+        description: raw data for all products sold
         identifier: raw_gz_product
+        freshness: 
+          error_after:
+            count: 2
+            period: day
+          warn_after:
+            count: 1
+            period: day
+        tests:
+          - unique:
+              product_id
+          - not_null:
+              product_id
+          
       - name: sales
+        description: raw data for all sales
         identifier: raw_gz_sales
+        freshness: 
+          error_after:
+            count: 2
+            period: day
+          warn_after:
+            count: 1
+            period: day
+        tests:
+          - unique:
+            pk: "(orders_id || pdt_id)" 
+          - not_null:
+            pk: "(orders_id || pdt_id)"     
+              
       - name: ship
+        description: raw data for shipping
         identifier: raw_gz_ship
+        freshness: 
+          error_after:
+            count: 2
+            period: day
+          warn_after:
+            count: 1
+            period: day
+        tests: 
+          - unique:
+              orders_id
+          - not_null:
+              orders_id
