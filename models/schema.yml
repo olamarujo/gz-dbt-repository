@@ -36,7 +36,7 @@ sources:
           - name: orders_id
             description: the identification number of the order
           - name: pdt_id
-            description: the i
+            description: the identification number of the product
           - name: revenue
             description: the amount of revenue for a given order and product
           - name: quantity
@@ -59,3 +59,77 @@ sources:
             description: the cost of the logging for a given order
           - name: ship_cost
             description: the amount of cost for shipping a given order
+models:
+  - name: int_sales_margin
+    description: intermediate table with margin added from the joining the sales and products tables
+    columns:
+      - name: "(orders_id || '_' || products_id)"
+        tests:
+          - unique
+          - not_null
+      - name: date_date
+        description: the day and time of a given order and product 
+      - name: orders_id
+        description: the identification number of the order
+      - name: products_id
+        description: the identification number of the product
+      - name: revenue
+        description: the amount of revenue for a given order and product
+      - name: quantity
+        description: the amount of products in a given order
+      - name: purchase_price
+        description: the price of a given product
+      - name: margin
+        description: the amount from the result of revenue - purchase cost of a given order
+
+  - name: int_orders_margin
+    description: intermediate table with margin added from the joining the sales and products tables
+    columns: 
+      - name: orders_id 
+        description: the amount of unique  identification of orders
+        tests:
+          - not_null
+      - name: date_date
+        description: the day and time
+        tests:
+          - not_null
+      - name: operational margin
+        description: the result of margin - logcost + shipping_fee - shipping_cost for every day 
+
+  - name: finance_days
+    description: the aggreagation of kpis for a every day from sales, orders and ship table
+    columns: 
+      - name: date_date
+        description: the day 
+        tests:
+          - unique
+          - not_null
+      - name: nb_transactions
+        description: the total number of transactions for a given day 
+      - name: revenue
+        description: the sum of revenue of a given day 
+      - name: average_basket
+        description: the average value of the basket of a given day
+      - name: margin
+        description: the revenue minus the purchase cost of a given day
+      - name: operational_margin
+        description: the margin plus the shipping fee minus shipping cost minus the logistics cost 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
