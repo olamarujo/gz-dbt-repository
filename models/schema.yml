@@ -21,6 +21,11 @@ sources:
       - name: sales
         description: raw data for all sales
         identifier: raw_gz_sales
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness: 
+          warn_after:
+            count: 90
+            period: day
         columns:
           - name: "(orders_id || '_' || pdt_id)"
             tests:
