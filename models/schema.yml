@@ -59,6 +59,46 @@ sources:
             description: the cost of the logging for a given order
           - name: ship_cost
             description: the amount of cost for shipping a given order
+
+      - name: project
+        description: table with model name and quantity per order 
+        identifier: raw_cc_parcel_project
+        columns:
+          - name: parcel_id
+            description: the identification number of a given project
+            tests:
+              - unique
+              - not_null
+          - name: model_mame
+            description: the type of project
+          - name: quantity
+            description: the quantity of projects sold
+
+      - name: parcel
+        description: a table with the dates and prioritys adn transporter for a given parcel 
+        identifier: raw_cc_parcel
+        columns:
+          - name: parcel_id
+            description: the identification of a given parcel
+            tests:
+              - unique
+              - not_null
+          - name: parcel_tracking
+            description: the url to track the parcel
+          - name: transporter
+            description: the company thats transporter a given parcel
+          - name: priority
+            description: the priority of a given parcel
+          - name: date_purchase
+            description: the date of purchase
+          - name: date_shipping
+            description: the date of shipping
+          - name: date_delivery
+            description: the date of delivery
+          - name: datecancelled
+            description: the date of cancelation of the parcel
+            
+          
 models:
   - name: int_sales_margin
     description: intermediate table with margin added from the joining the sales and products tables
