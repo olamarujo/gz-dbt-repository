@@ -1,0 +1,1 @@
+{{ dbt_utils.union_relations( 'stg_raw__adwords', 'stg_raw__bing', 'stg_raw__criteo', 'stg_raw__facebook') }}
